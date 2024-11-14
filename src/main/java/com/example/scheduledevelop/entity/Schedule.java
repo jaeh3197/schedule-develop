@@ -1,8 +1,10 @@
 package com.example.scheduledevelop.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 //schedule entity 생성
+@Getter
 @Entity
 @Table(name = "schedule")
 public class Schedule extends BaseEntity {
@@ -16,6 +18,7 @@ public class Schedule extends BaseEntity {
     @Column(nullable = false)
     private String title;
 
+    //많은 contents 저장
     @Column(columnDefinition = "longtext")
     private String contents;
 
@@ -23,4 +26,19 @@ public class Schedule extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    //기본 생성자 생성
+    public Schedule() {
+    }
+
+    //생성자 생성
+    public Schedule(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
+
+    //유저를 받아오기 위해 Setter 생성
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

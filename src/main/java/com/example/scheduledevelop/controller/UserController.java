@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+//유저 컨트롤러 생성
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor

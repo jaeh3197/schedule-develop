@@ -5,12 +5,9 @@ import com.example.scheduledevelop.dto.user.UserResponseDto;
 import com.example.scheduledevelop.entity.User;
 import com.example.scheduledevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
+//bean 으로 설정
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -32,15 +29,8 @@ public class UserService {
     //id 로 유저 조회 로직 구현
     public UserResponseDto findById(Long id) {
 
-        //Optional 로 객체 생성
-        Optional<User> optionalUser = userRepository.findById(id);
-
-        //null 예외 처리
-        if (optionalUser.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exists id = " + id);
-        }
-
-        User findUser = optionalUser.get();
+        //findByIdOrElseThrow 메소드를 통해 객체 생성
+        User findUser = userRepository.findByIdOrElseThrow(id);
 
         return new UserResponseDto(findUser.getUsername(), findUser.getEmail());
     }
