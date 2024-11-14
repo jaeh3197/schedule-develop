@@ -2,6 +2,7 @@ package com.example.scheduledevelop.dto.user;
 
 import lombok.Getter;
 
+//유저 저장 시 응답 Dto
 @Getter
 public class SignUpResponseDto {
 

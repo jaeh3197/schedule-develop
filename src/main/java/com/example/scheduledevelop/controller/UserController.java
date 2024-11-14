@@ -2,22 +2,22 @@ package com.example.scheduledevelop.controller;
 
 import com.example.scheduledevelop.dto.user.SignUpRequestDto;
 import com.example.scheduledevelop.dto.user.SignUpResponseDto;
+import com.example.scheduledevelop.dto.user.UserResponseDto;
 import com.example.scheduledevelop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
+    //UserService 호출
     private final UserService userService;
 
+    //유저 저장
     @PostMapping("/signup")
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto requestDto) {
 
@@ -27,6 +27,20 @@ public class UserController {
                         requestDto.getEmail(),
                         requestDto.getPassword()
                 );
+
+        //성공 시 응답
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
+    }
+
+    //특정 유저 조회
+    //id 를 매개변수로 받아 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> findById(@PathVariable Long id) {
+
+        //service 에서 id 를 이용한 조회 메서드 호출
+        UserResponseDto userResponseDto = userService.findById(id);
+
+        //성공 시 응답
+        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 }
