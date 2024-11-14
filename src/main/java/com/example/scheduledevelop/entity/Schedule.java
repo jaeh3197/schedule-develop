@@ -41,4 +41,10 @@ public class Schedule extends BaseEntity {
     public void setUser(User user) {
         this.user = user;
     }
+
+    //제목과 내용을 수정하기 위한 Setter 생성
+    public void update(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
 }

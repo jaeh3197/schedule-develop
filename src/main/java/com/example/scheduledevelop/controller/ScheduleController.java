@@ -2,6 +2,7 @@ package com.example.scheduledevelop.controller;
 
 import com.example.scheduledevelop.dto.schedule.CreateScheduleRequestDto;
 import com.example.scheduledevelop.dto.schedule.ScheduleResponseDto;
+import com.example.scheduledevelop.dto.schedule.UpdateScheduleRequestDto;
 import com.example.scheduledevelop.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,21 @@ public class ScheduleController {
         List<ScheduleResponseDto> scheduleResponseDtoList = scheduleService.findAll();
 
         return new ResponseEntity<>(scheduleResponseDtoList, HttpStatus.OK);
+    }
+
+    //일정 수정
+    @PatchMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> update(
+            @PathVariable Long id,
+            @RequestBody UpdateScheduleRequestDto requestDto
+    ) {
+
+        //update 메서드로 객체 생성
+        ScheduleResponseDto updatedResponseDto = scheduleService.update(id, requestDto.getTitle(), requestDto.getContents());
+
+        //성공 시 응답
+        return new ResponseEntity<>(updatedResponseDto, HttpStatus.OK);
+
     }
 
     //일정 삭제

@@ -56,4 +56,19 @@ public class ScheduleService {
         //repository 에서 삭제
         scheduleRepository.delete(findSchedule);
     }
+
+    //일정 수정 로직 구현
+    public ScheduleResponseDto update(Long id, String title, String contents) {
+
+        //예외처리 메서드를 통해 객체 생성
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+
+        //요청 받은 값 주입
+        findSchedule.update(title, contents);
+
+        //repository 에 저장
+        Schedule updatedSchedule = scheduleRepository.save(findSchedule);
+
+        return new ScheduleResponseDto(updatedSchedule.getId(), updatedSchedule.getTitle(), updatedSchedule.getContents());
+    }
 }
