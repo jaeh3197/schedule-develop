@@ -1,5 +1,6 @@
 package com.example.scheduledevelop.dto.schedule;
 
+import com.example.scheduledevelop.entity.Schedule;
 import lombok.Getter;
 
 //일정 저장 시 응답 Dto
@@ -18,5 +19,8 @@ public class ScheduleResponseDto {
         this.contents = contents;
     }
 
-
+    //ScheduleResponseDto 를 편하게 생성하기 위해 static 메서드 생성
+    public static ScheduleResponseDto toDto(Schedule schedule) {
+        return new ScheduleResponseDto(schedule.getId(), schedule.getTitle(), schedule.getContents());
+    }
 }

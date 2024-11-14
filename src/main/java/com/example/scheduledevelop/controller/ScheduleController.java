@@ -6,10 +6,9 @@ import com.example.scheduledevelop.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //일정 컨트롤러 생성
 @RestController
@@ -33,5 +32,15 @@ public class ScheduleController {
 
         //성공 시 응답
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.CREATED);
+    }
+
+    //일정 조회
+    @GetMapping
+    public ResponseEntity<List<ScheduleResponseDto>> findAll() {
+
+        //List 로 일정 조회
+        List<ScheduleResponseDto> scheduleResponseDtoList = scheduleService.findAll();
+
+        return new ResponseEntity<>(scheduleResponseDtoList, HttpStatus.OK);
     }
 }
