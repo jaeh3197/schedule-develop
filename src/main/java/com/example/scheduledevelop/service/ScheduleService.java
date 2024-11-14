@@ -46,4 +46,14 @@ public class ScheduleService {
                 .map(ScheduleResponseDto :: toDto)
                 .toList();
     }
+
+    //일정 삭제 로직 구현
+    public void delete(Long id) {
+
+        //예외처리 메서드를 통해 객체 생성
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+
+        //repository 에서 삭제
+        scheduleRepository.delete(findSchedule);
+    }
 }

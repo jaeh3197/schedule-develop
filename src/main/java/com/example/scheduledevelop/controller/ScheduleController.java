@@ -43,4 +43,15 @@ public class ScheduleController {
 
         return new ResponseEntity<>(scheduleResponseDtoList, HttpStatus.OK);
     }
+
+    //일정 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+
+        //delete 메서드 호출
+        scheduleService.delete(id);
+
+        //성공 시 응답
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
