@@ -34,4 +34,14 @@ public class UserService {
 
         return new UserResponseDto(findUser.getUsername(), findUser.getEmail());
     }
+
+    //유저 삭제 로직 구현
+    public void delete(Long id) {
+
+        //repository 에서 id 로 찾아 객체 생성
+        User findUser = userRepository.findByIdOrElseThrow(id);
+
+        //repository 에서 삭제
+        userRepository.delete(findUser);
+    }
 }

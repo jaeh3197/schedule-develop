@@ -44,4 +44,14 @@ public class UserController {
         //성공 시 응답
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
+
+    //유저 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+
+        //service 에서 delete 메서도 호출
+        userService.delete(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
