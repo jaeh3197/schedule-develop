@@ -16,10 +16,13 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
+    //작성일 JPA Auditing 적용
+    //수정 불가
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    //수정일 JPA Auditing 적용
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
