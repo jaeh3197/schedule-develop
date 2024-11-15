@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserByUsername(String username);
+    Optional<User> findUserByEmail(String email);
 
     //default 를 사용하여 메서드 구현
     //null 값 예외 처리

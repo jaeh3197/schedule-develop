@@ -1,12 +1,13 @@
 package com.example.scheduledevelop.controller;
 
-import com.example.scheduledevelop.dto.user.SignUpRequestDto;
-import com.example.scheduledevelop.dto.user.SignUpResponseDto;
-import com.example.scheduledevelop.dto.user.UserResponseDto;
+import com.example.scheduledevelop.dto.user.*;
 import com.example.scheduledevelop.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 //유저 컨트롤러 생성
@@ -51,6 +52,31 @@ public class UserController {
 
         //service 에서 delete 메서도 호출
         userService.delete(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //로그인
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDto> login(
+            @Validated  @RequestBody LoginRequestDto requestDto,
+            HttpServletRequest request
+    ) {
+        //로그인 성공 시 로직
+        //성공한 데이터를 LoginResponseDto 에 담아 객체 생성
+        LoginResponseDto responseDto = userService.login(requestDto.getEmail(), requestDto.getPassword());
+
+        //id 값을 Long 변수에 저장
+        Long userId = responseDto.getId();
+
+        //session 생성
+        HttpSession session = request.getSession();
+
+        //회원 정보 조회
+        UserResponseDto userResponseDto = userService.findById(userId);
+
+        //session 에 로그인 회원 정보를 저장
+        session.setAttribute("sessionKey", userResponseDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

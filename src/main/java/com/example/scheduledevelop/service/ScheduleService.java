@@ -7,6 +7,7 @@ import com.example.scheduledevelop.repository.ScheduleRepository;
 import com.example.scheduledevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class ScheduleService {
                 .toList();
     }
 
+    @Transactional
     //일정 수정 로직 구현
     public ScheduleResponseDto update(Long id, String title, String contents) {
 
@@ -56,10 +58,7 @@ public class ScheduleService {
         //요청 받은 값 주입
         findSchedule.update(title, contents);
 
-        //repository 에 저장
-        Schedule updatedSchedule = scheduleRepository.save(findSchedule);
-
-        return new ScheduleResponseDto(updatedSchedule.getId(), updatedSchedule.getTitle(), updatedSchedule.getContents());
+        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContents());
     }
 
     //일정 삭제 로직 구현

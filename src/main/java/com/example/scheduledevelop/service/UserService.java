@@ -1,11 +1,16 @@
 package com.example.scheduledevelop.service;
 
+import com.example.scheduledevelop.dto.user.LoginResponseDto;
 import com.example.scheduledevelop.dto.user.SignUpResponseDto;
 import com.example.scheduledevelop.dto.user.UserResponseDto;
 import com.example.scheduledevelop.entity.User;
 import com.example.scheduledevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 //bean 으로 설정
 @Service
@@ -43,5 +48,25 @@ public class UserService {
 
         //repository 에서 삭제
         userRepository.delete(findUser);
+    }
+
+    //로그인 로직 구현
+    public LoginResponseDto login(String email, String password) {
+
+        //repository 에서 email 로 찾아 객체 생성
+        Optional<User> findUser = userRepository.findUserByEmail(email);
+
+        //null 값 예외 처리
+        if (findUser.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not exist email = " + email);
+        }
+
+        //email 과 password 가 다를 경우 예외 처리
+        if (!findUser.get().getEmail().equals(email) || !findUser.get().getPassword().equals(password)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong email or password");
+        }
+
+        //email 과 password 가 같을 경우 id 값 반환
+        return new LoginResponseDto(findUser.get().getId());
     }
 }
